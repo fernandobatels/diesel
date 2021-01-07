@@ -25,7 +25,7 @@ use super::order_clause::NoOrderClause;
 use super::select_clause::*;
 use super::where_clause::*;
 use super::{AstPass, Query, QueryFragment};
-use crate::backend::Backend;
+use crate::backend::{Backend, UsesDefaultSelectSyntax};
 use crate::expression::subselect::ValidSubselect;
 use crate::expression::*;
 use crate::query_builder::limit_offset_clause::LimitOffsetClause;
@@ -47,14 +47,14 @@ pub struct SelectStatement<
     GroupBy = NoGroupByClause,
     Locking = NoLockingClause,
 > {
-    pub(crate) select: Select,
-    pub(crate) from: From,
-    pub(crate) distinct: Distinct,
-    pub(crate) where_clause: Where,
-    pub(crate) order: Order,
-    pub(crate) limit_offset: LimitOffset,
-    pub(crate) group_by: GroupBy,
-    pub(crate) locking: Locking,
+    pub select: Select,
+    pub from: From,
+    pub distinct: Distinct,
+    pub where_clause: Where,
+    pub order: Order,
+    pub limit_offset: LimitOffset,
+    pub group_by: GroupBy,
+    pub locking: Locking,
 }
 
 impl<F, S, D, W, O, LOf, G, LC> SelectStatement<F, S, D, W, O, LOf, G, LC> {
@@ -119,7 +119,7 @@ where
 
 impl<F, S, D, W, O, LOf, G, LC, DB> QueryFragment<DB> for SelectStatement<F, S, D, W, O, LOf, G, LC>
 where
-    DB: Backend,
+    DB: Backend + UsesDefaultSelectSyntax,
     S: SelectClauseQueryFragment<F, DB>,
     F: QuerySource,
     F::FromClause: QueryFragment<DB>,
@@ -147,7 +147,7 @@ where
 
 impl<S, D, W, O, LOf, G, LC, DB> QueryFragment<DB> for SelectStatement<(), S, D, W, O, LOf, G, LC>
 where
-    DB: Backend,
+    DB: Backend + UsesDefaultSelectSyntax,
     S: SelectClauseQueryFragment<(), DB>,
     D: QueryFragment<DB>,
     W: QueryFragment<DB>,

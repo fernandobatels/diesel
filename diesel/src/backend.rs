@@ -86,3 +86,5 @@ pub trait SupportsOnConflictTargetDecorations {}
 pub trait SupportsDefaultKeyword {}
 /// Does this backend use the standard `SAVEPOINT` syntax?
 pub trait UsesAnsiSavepointSyntax {}
+/// Does this backend use the default `SELECT` clause(provided by diesel core lib)?
+pub trait UsesDefaultSelectSyntax {}

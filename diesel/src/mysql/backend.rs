@@ -79,3 +79,4 @@ impl TypeMetadata for Mysql {
 
 impl SupportsDefaultKeyword for Mysql {}
 impl UsesAnsiSavepointSyntax for Mysql {}
+impl UsesDefaultSelectSyntax for Mysql {}

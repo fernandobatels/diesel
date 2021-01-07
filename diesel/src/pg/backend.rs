@@ -48,3 +48,4 @@ impl SupportsOnConflictClause for Pg {}
 impl SupportsOnConflictTargetDecorations for Pg {}
 impl SupportsDefaultKeyword for Pg {}
 impl UsesAnsiSavepointSyntax for Pg {}
+impl UsesDefaultSelectSyntax for Pg {}
